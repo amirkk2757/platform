@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: create-deployment-dev-webstore
+  namespace: argocd
+spec:
+  goTemplate: true
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+  generators:
+    - matrix:
+        generators:
+          - clusters:
+              selector:
+                matchExpressions:
+                  - key: workload_webstore
+                    operator: In
+                    values: ['true']
+                  - key: environment
+                    operator: In
+                    values: ['dev']                  
+              values:
+                workload: webstore
+          - git:
+              requeueAfterSeconds: 30
+              repoURL: '{{ .metadata.annotations.workload_repo_url }}'
+              revision: '{{ .metadata.annotations.workload_repo_revision }}'
+              directories:
+                - path: '{{ .metadata.annotations.workload_repo_basepath }}webstore/*/dev'
+  template:
+    metadata:
+      name: 'deployment-{{ .metadata.labels.environment }}-{{ index .path.segments 1 }}-webstore'
+      labels:
+        environment: '{{ .metadata.labels.environment }}'
+        tenant: 'webstore'
+        component: '{{ index .path.segments 1 }}'
+        workloads: 'true'
+    spec:
+      project: default
+      source:
+        repoURL: '{{ .metadata.annotations.workload_repo_url }}'
+        path: '{{ .path.path }}'
+        targetRevision: '{{ .metadata.annotations.workload_repo_revision }}'
+      destination:
+        namespace: '{{ index .path.segments 1 }}'
+        name: '{{ .name }}'
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          prune: true
+        retry:
+          backoff:
+            duration: 1m
