@@ -31,8 +31,8 @@ spec:
           releaseName: 'webstore'
           ignoreMissingValueFiles: true
           valueFiles:
-            - '../../config/tenant1/namespace/values/default-values.yaml'
-            - '../../config/tenant1/namespace/values/{{ .metadata.labels.environment }}-values.yaml'
+            - '../../config/tenant2/namespace/values/default-values.yaml'
+            - '../../config/tenant2/namespace/values/{{ .metadata.labels.environment }}-values.yaml'
       destination:
         name: '{{ .name }}'
       syncPolicy:
