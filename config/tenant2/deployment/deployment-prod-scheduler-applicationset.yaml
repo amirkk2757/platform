@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: create-deployment-prod-scheduler
+  name: create-deployment-prod-scheduler-tenant2
   namespace: argocd
 spec:
   goTemplate: true
