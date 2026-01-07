@@ -29,7 +29,7 @@ spec:
                 - path: '{{ .metadata.annotations.workload_repo_basepath }}scheduler/*/tenant2'
   template:
     metadata:
-      name: 'deployment-{{ .metadata.labels.environment }}-{{ index .path.segments 1 }}-scheduler'
+      name: 'deployment-{{ .metadata.labels.environment }}-{{ index .path.segments 1 }}-scheduler-tenant2'
       labels:
         environment: '{{ .metadata.labels.environment }}'
         tenant: 'webstore'
