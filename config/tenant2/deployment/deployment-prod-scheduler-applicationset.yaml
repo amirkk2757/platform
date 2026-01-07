@@ -51,3 +51,5 @@ spec:
         retry:
           backoff:
             duration: 1m
+        syncOptions: 
+          - CreateNamespace=true
