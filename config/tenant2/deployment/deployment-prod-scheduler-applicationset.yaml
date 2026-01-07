@@ -15,7 +15,10 @@ spec:
                 matchExpressions:
                   - key: workload_scheduler
                     operator: In
-                    values: ['true']         
+                    values: ['true']
+                  - key: environment
+                    operator: In
+                    values: ['prod']                               
               values:
                 workload: webstore
           - git:
