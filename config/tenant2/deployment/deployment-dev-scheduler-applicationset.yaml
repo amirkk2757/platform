@@ -18,7 +18,7 @@ spec:
                     values: ['true']
                   - key: environment
                     operator: In
-                    values: ['dev']          
+                    values: ['dev']       
               values:
                 workload: webstore
           - git:
@@ -26,7 +26,7 @@ spec:
               repoURL: '{{ .metadata.annotations.workload_repo_url }}'
               revision: '{{ .metadata.annotations.workload_repo_revision }}'
               directories:
-                - path: '{{ .metadata.annotations.workload_repo_basepath }}scheduler/*/dev'
+                - path: '{{ .metadata.annotations.workload_repo_basepath }}scheduler/*/tenant2'
   template:
     metadata:
       name: 'deployment-{{ .metadata.labels.environment }}-{{ index .path.segments 1 }}-scheduler'
